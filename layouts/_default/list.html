@@ -1,9 +1,13 @@
 {{- define "main" }}
 
+{{/* if not profileMode */}}
 {{- if (and site.Params.profileMode.enabled .IsHome) }}
 {{- partial "index_profile.html" . }}
-{{- else }} {{/* if not profileMode */}}
+{{- else }} 
 
+{{/*  页面标题与导航  */}}
+{{/*  如果当前不是首页且存在标题，使用 <header> 元素来显示面包屑导航和页面标题  */}}
+{{/*  调用 breadcrumbs.html 部分模板来渲染面包屑导航  */}}
 {{- if not .IsHome | and .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
@@ -22,6 +26,7 @@
     {{- end }}
     {{- end }}
   </h1>
+  {{/*  如果存在页面描述，将描述内容转换为 HTML（Markdown 提供支持）  */}}
   {{- if .Description }}
   <div class="post-description">
     {{ .Description | markdownify }}
@@ -30,6 +35,8 @@
 </header>
 {{- end }}
 
+
+{{/*  内容渲染  */}}
 {{- if .Content }}
 <div class="post-content">
   {{- if not (.Param "disableAnchoredHeadings") }}
@@ -38,18 +45,24 @@
 </div>
 {{- end }}
 
+{{/*  页面分页  */}}
 {{- $pages := union .RegularPages .Sections }}
 
+{{/*  如果当前页面是首页，限制页面显示为在 site.Params.mainSections 中定义的条目，并排除被标记为隐藏的条目  */}}
 {{- if .IsHome }}
 {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
-{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true"  }}
+{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
 {{- end }}
 
+{{/*  使用 Hugo 的分页功能来处理集合 $pages，生成一个分页器  */}}
 {{- $paginator := .Paginate $pages }}
 
+{{/*  显示每篇文章  */}}
 {{- if and .IsHome site.Params.homeInfoParams (eq $paginator.PageNumber 1) }}
 {{- partial "home_info.html" . }}
 {{- end }}
+
+<h2 class="recent-posts">Recent Posts</h2>
 
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
@@ -63,9 +76,10 @@
 {{- $class = "post-entry tag-entry" }}
 {{- end }}
 
+{{/*  遍历分页中的每一页，生成文章条目的 HTML，包括标题和状态（如草稿标记）  */}}
 <article class="{{ $class }}">
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
-  {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
+  {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}  
   <header class="entry-header">
     <h2 class="entry-hint-parent">
       {{- .Title }}
@@ -78,21 +92,25 @@
       </span>
       {{- end }}
     </h2>
+
+    {{- if not (.Param "hideMeta") }}
+    <footer class="entry-footer">
+      {{- partial "post_meta.html" . -}}
+    </footer>
+    {{- end }}
+
   </header>
   {{- if (ne (.Param "hideSummary") true) }}
   <div class="entry-content">
     <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
   </div>
   {{- end }}
-  {{- if not (.Param "hideMeta") }}
-  <footer class="entry-footer">
-    {{- partial "post_meta.html" . -}}
-  </footer>
-  {{- end }}
+
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}
 
+{{/*  页脚与分页链接  */}}
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
   <nav class="pagination">
@@ -114,6 +132,7 @@
     {{- end }}
   </nav>
 </footer>
+
 {{- end }}
 
 {{- end }}{{/* end profileMode */}}

@@ -27,15 +27,55 @@
     margin-inline-start: auto;
 }
 
+.social-icons {
+    display: flex;
+    align-items: center;
+}
 
 .social-icons a {
     display: inline-flex;
-    padding: 10px;
+    padding: 6px;
+    /* 设置过渡效果 */
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+    color: #ff5722;
+    /* 设置鼠标悬停时的颜色，可以根据需要调整 */
+    transform: translateX(2px);
+    /* 向右移动一定的距离 */
+}
+
+.social-icons a:hover {
+    animation: social-icons-shake 0.3s;
+    /* 添加晃动效果 */
+}
+
+@keyframes social-icons-shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-2px);
+    }
+
+    50% {
+        transform: translateX(2px);
+    }
+
+    75% {
+        transform: translateX(-2px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .social-icons a svg {
-    height: 26px;
-    width: 26px;
+    height: 20px;
+    width: 20px;
 }
 
 code {
@@ -48,14 +88,14 @@ pre {
 }
 
 .copy-code {
-    display: none;
+    display: disply;
     position: absolute;
-    top: 4px;
-    right: 4px;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(78, 78, 78, 0.8);
+    top: -10px;
+    right: 15px;
+    color: rgba(183, 222, 235);
+    background: rgb(52, 63, 96);
     border-radius: var(--radius);
-    padding: 0 5px;
+    padding: 5px 10px;
     font-size: 14px;
     user-select: none;
 }

@@ -166,6 +166,8 @@
     background: var(--code-block-bg) !important;
     border-radius: var(--radius);
     direction: ltr;
+    /* Add */
+    border: 1px solid var(--colorOrang);
 }
 
 .post-content li>.highlight {

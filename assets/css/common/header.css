@@ -1,3 +1,9 @@
+.header {
+    position: relative;  /* 可根据需要设置相对定位 */
+    max-width: calc(var(--main-width) + var(--gap) * 2);  /* 设置最大宽度与.main一致 */
+    margin: auto;  /* 水平居中 */
+    padding: var(--gap);  /* 添加与.main相同的上下左右内边距 */
+}
 .nav {
     display: flex;
     flex-wrap: wrap;
@@ -6,6 +12,7 @@
     margin-inline-start: auto;
     margin-inline-end: auto;
     line-height: var(--header-height);
+    border-bottom: 1px solid rgb(246, 105, 3);
 }
 
 .nav a {
