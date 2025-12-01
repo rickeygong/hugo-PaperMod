@@ -85,7 +85,7 @@ Release ChangeLog has info about stuff added: **[Releases](https://github.com/ad
 
 ## Support 🫶
 
--   Star 🌟 this repository.
+-   Star 🌟 this repository!
 -   Help spread the word about PaperMod by sharing it on social media and recommending it to your friends. 🗣️
 -   You can also sponsor 🏅 on [Github Sponsors](https://github.com/sponsors/adityatelange) / [Ko-Fi](https://ko-fi.com/adityatelange).
 
